@@ -5,13 +5,13 @@ purchasePrice = int(input("Enter the purchase price of the property to be mortga
 
 # purchase price under 500000 
 if purchasePrice < 500000:
-    minimumDownpayment = 0.05 * purchasePrice
-    print(minimumDownpayment)
+    minimumDownPayment = 0.05 * purchasePrice
+    print(minimumDownPayment)
 
 # purchase price between 500000 and 1000000
 elif purchasePrice >= 500000 and purchasePrice <= 1000000:
-    minimumDownpayment = ((500000 * 0.05) + ((purchasePrice - 500000) * 0.10))
-    print(minimumDownpayment)
+    minimumDownPayment = ((500000 * 0.05) + ((purchasePrice - 500000) * 0.10))
+    print(minimumDownPayment)
 
 # elif statement over 1000000
 elif purchasePrice > 1000000:
