@@ -18,9 +18,9 @@ elif purchasePrice > 1000000:
     minimumDownPayment = purchasePrice * 0.20
     print(minimumDownPayment)
 
-minimumDownPaymentPercent = ((downPaymentMT / purchasePrice) * 100)
+minimumDownPaymentPercent = ((minimumDownPayment / purchasePrice) * 100)
 
-downPaymentPercent = float(input(f'Input down payment amount, at least %{minimumDownPaymentPercent:.3}: %'))/100
+downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.4}): '))/100
 
 # PART 1 stage 2
 if downPaymentPercent >= 0.05 and downPaymentPercent < 0.10:
@@ -36,3 +36,7 @@ elif downPaymentPercent >= 0.20:
 downPayment = (purchasePrice * downPaymentPercent)
 insuranceCost = (((purchasePrice - downPayment) * mortgage))
 principalAmount = (purchasePrice - downPayment + insuranceCost)
+
+print(f'Down payment amount is ${downPayment:.0f}')
+print(f'Mortgage insurance price is ${insuranceCost:.0f}')
+print(f'Total mortgage amount is ${principalAmount:.0f}')
