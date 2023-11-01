@@ -7,16 +7,21 @@ purchasePrice = int(input("Enter the purchase price of the property to be mortga
 # purchase price under 500000 
 if purchasePrice < 500000:
     minimumDownPayment = 0.05 * purchasePrice
+
     print(f"Your minimum down payment is: ${minimumDownPayment}")
+
 
 # purchase price between 500000 and 1000000
 elif purchasePrice >= 500000 and purchasePrice <= 1000000:
     minimumDownPayment = ((500000 * 0.05) + ((purchasePrice - 500000) * 0.10))
+
     print(f"Your minimum down payment is: ${minimumDownPayment}")
+
 
 # elif statement over 1000000
 elif purchasePrice > 1000000:
     minimumDownPayment = purchasePrice * 0.20
+
     print(f"Your minimum down payment is: ${minimumDownPayment}")
 
 minimumDownPaymentPercent = ((minimumDownPayment / purchasePrice) * 100)
@@ -39,6 +44,7 @@ elif downPaymentPercent >= 0.15 and downPaymentPercent < 0.20:
 elif downPaymentPercent >= 0.20:
     mortgage = 0
 
+
 downPayment = (purchasePrice * downPaymentPercent)
 insuranceCost = (((purchasePrice - downPayment) * mortgage))
 principalAmount = (purchasePrice - downPayment + insuranceCost)
@@ -46,6 +52,7 @@ principalAmount = (purchasePrice - downPayment + insuranceCost)
 print(f'Down payment amount is ${downPayment:.0f}')
 print(f'Mortgage insurance price is ${insuranceCost:.0f}')
 print(f'Total mortgage amount is ${principalAmount:.0f}')
+
 
 # PART 1 stage 3
 mortgage_term_interest_rates_dict = {
@@ -55,6 +62,7 @@ mortgage_term_interest_rates_dict = {
     5: 0.0529, 
     10: 0.06
     }
+
 
 # list of valid mortgage term options
 valid_mortgage_term = [1, 2, 3, 5, 10]
@@ -77,6 +85,7 @@ while True:
         break
     else:
         print("Please enter a valid choice.")
+
 
 annual_mortgage_interest_rate = mortgage_term_interest_rates_dict.get(mortgage_term)
 
