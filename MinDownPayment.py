@@ -8,34 +8,41 @@ purchasePrice = int(input("Enter the purchase price of the property to be mortga
 if purchasePrice < 500000:
     minimumDownPayment = 0.05 * purchasePrice
 
+    print(f"Your minimum down payment is: ${minimumDownPayment}")
+
+
 # purchase price between 500000 and 1000000
 elif purchasePrice >= 500000 and purchasePrice <= 1000000:
     minimumDownPayment = ((500000 * 0.05) + ((purchasePrice - 500000) * 0.10))
+
+    print(f"Your minimum down payment is: ${minimumDownPayment}")
+
 
 # elif statement over 1000000
 elif purchasePrice > 1000000:
     minimumDownPayment = purchasePrice * 0.20
 
+    print(f"Your minimum down payment is: ${minimumDownPayment}")
+
 minimumDownPaymentPercent = ((minimumDownPayment / purchasePrice) * 100)
 
-
-# PART 1 stage 2
+# while true loop to check if down payment percent is above the down payment minimum
 while True:
-    downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.3f}): '))/100
-    if downPaymentPercent >= 0.05 and downPaymentPercent < 0.10:
-        mortgage = 0.04
-        break
-    elif downPaymentPercent >= 0.10 and downPaymentPercent < 0.15:
-        mortgage = 0.031
-        break
-    elif downPaymentPercent >= 0.15 and downPaymentPercent < 0.20:
-        mortgage = 0.028
-        break
-    elif downPaymentPercent >= 0.20 and downPaymentPercent <= 1:
-        mortgage = 0
+    downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.4}): '))/100
+    if downPaymentPercent >= minimumDownPaymentPercent/100:
         break
     else:
-        print('Value is less than the minimum amount or out of range')
+        print("Please enter a value between the minimum and 100.")
+
+# PART 1 stage 2
+if downPaymentPercent >= 0.05 and downPaymentPercent < 0.10:
+    mortgage = 0.04
+elif downPaymentPercent >= 0.10 and downPaymentPercent < 0.15:
+    mortgage = 0.031
+elif downPaymentPercent >= 0.15 and downPaymentPercent < 0.20:
+    mortgage = 0.028
+elif downPaymentPercent >= 0.20:
+    mortgage = 0
 
 
 downPayment = (purchasePrice * downPaymentPercent)
@@ -56,8 +63,29 @@ mortgage_term_interest_rates_dict = {
     10: 0.06
     }
 
-mortgage_term = int(input("Enter mortgage term in years (options: 1, 2, 3, 5, 10): "))
-amortization_period = int(input("Enter amortization period in years (options: 5, 10, 15, 20 ,25): "))
+
+# list of valid mortgage term options
+valid_mortgage_term = [1, 2, 3, 5, 10]
+
+# check if mortgage term input is in valid options list
+while True:
+    mortgage_term = int(input("Enter mortgage term in years (options: 1, 2, 3, 5, 10): "))
+    if mortgage_term in valid_mortgage_term:
+        break
+    else:
+        print("Please enter a valid choice.")
+
+# list of valid amortization period options
+valid_amortization_period = [5, 10, 15, 20, 25]
+
+# check if amortization input is in valid options list
+while True:
+    amortization_period = int(input("Enter amortization period in years (options: 5, 10, 15, 20 ,25): "))
+    if amortization_period in valid_amortization_period: 
+        break
+    else:
+        print("Please enter a valid choice.")
+
 
 annual_mortgage_interest_rate = mortgage_term_interest_rates_dict.get(mortgage_term)
 
