@@ -55,7 +55,7 @@ print(f'Total mortgage amount is ${principalAmount:.0f}')
 
 
 # PART 1 stage 3
-mortgage_term_interest_rates_dict = {
+mortgageTermInterestRatesDict = {
     1: 0.0595, 
     2: 0.059, 
     3: 0.056, 
@@ -65,37 +65,37 @@ mortgage_term_interest_rates_dict = {
 
 
 # list of valid mortgage term options
-valid_mortgage_term = [1, 2, 3, 5, 10]
+validMortgageTerm = [1, 2, 3, 5, 10]
 
 # check if mortgage term input is in valid options list
 while True:
-    mortgage_term = int(input("Enter mortgage term in years (options: 1, 2, 3, 5, 10): "))
-    if mortgage_term in valid_mortgage_term:
+    mortgageTerm = int(input("Enter mortgage term in years (options: 1, 2, 3, 5, 10): "))
+    if mortgageTerm in validMortgageTerm:
         break
     else:
         print("Please enter a valid choice.")
 
 # list of valid amortization period options
-valid_amortization_period = [5, 10, 15, 20, 25]
+validAmortizationPeriod = [5, 10, 15, 20, 25]
 
 # check if amortization input is in valid options list
 while True:
-    amortization_period = int(input("Enter amortization period in years (options: 5, 10, 15, 20 ,25): "))
-    if amortization_period in valid_amortization_period: 
+    amortizationPeriod = int(input("Enter amortization period in years (options: 5, 10, 15, 20 ,25): "))
+    if amortizationPeriod in validAmortizationPeriod: 
         break
     else:
         print("Please enter a valid choice.")
 
 
-annual_mortgage_interest_rate = mortgage_term_interest_rates_dict.get(mortgage_term)
+annualMortgageInterestRate = mortgageTermInterestRatesDict.get(mortgageTerm)
 
 # Effective monthly rate (EMR) calculation
-EMR = ((1 + annual_mortgage_interest_rate / 2) ** 2) ** (1/12) - 1
-print(f"Effective monthly rate is {EMR}%")
+EMR = ((1 + annualMortgageInterestRate / 2) ** 2) ** (1/12) - 1
+print(f"Effective monthly rate is {EMR:.2f}%")
 
 # Number of monthly payments (n) 
-n = amortization_period * 12
+n = amortizationPeriod * 12
 
 # Monthly payments (m) calculations
-monthly_payments = principalAmount * (EMR * (1 + EMR) ** n) / ((1 + EMR) ** n - 1)
-print(f"Your monthly payments over {amortization_period} years is ${monthly_payments:.2f}")
+monthlyPayments = principalAmount * (EMR * (1 + EMR) ** n) / ((1 + EMR) ** n - 1)
+print(f"Your monthly payments over {amortizationPeriod} years is ${monthlyPayments:.2f}")
