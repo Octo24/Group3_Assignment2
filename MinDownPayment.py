@@ -21,7 +21,13 @@ elif purchasePrice > 1000000:
 
 minimumDownPaymentPercent = ((minimumDownPayment / purchasePrice) * 100)
 
-downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.4}): '))/100
+# while true loop to check if down payment percent is above the down payment minimum
+while True:
+    downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.4}): '))/100
+    if downPaymentPercent >= minimumDownPaymentPercent/100:
+        break
+    else:
+        print("Please enter a value between the minimum and 100.")
 
 # PART 1 stage 2
 if downPaymentPercent >= 0.05 and downPaymentPercent < 0.10:
