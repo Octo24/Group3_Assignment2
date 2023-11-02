@@ -3,7 +3,7 @@
 #### Part 1
 
 0. Introduction
-Asks for 3 user inputs: a name, address, and purchasing price.
+Asks for 3 user inputs: a name, address, and Purchasing price(P).
 
 1. Minimum Down Payment Component
 
