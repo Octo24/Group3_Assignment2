@@ -123,6 +123,8 @@ if table.upper() == ('Y'):
     # Formats each row into a table that is readable
     with open('amortization_schedule.csv', 'r') as f:
         reader = csv.reader(f)
+        print("{:^100s}".format("Monthly Amortization Schedule"))
+        print()
         print("{:<10} {:<20} {:<20} {:<20} {:<20} {:<20}".format('Month', 'Opening Bal', 'Payment', 'Principle', 'Interest', 'Closing Bal'))
         next(reader)
         for row in reader:
