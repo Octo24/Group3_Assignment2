@@ -19,7 +19,7 @@ minimumDownPaymentPercent = ((minimumDownPayment / purchasePrice) * 100)
 
 # while true loop to check if down payment percent is above the down payment minimum
 while True:
-    downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.4}): '))/100
+    downPaymentPercent = float(input(f'Enter down payment percentage (minimum {minimumDownPaymentPercent:.3f}): '))/100
     if downPaymentPercent >= minimumDownPaymentPercent/100 and downPaymentPercent <= 1.0:
         break
     else:
@@ -34,7 +34,6 @@ elif downPaymentPercent >= 0.15 and downPaymentPercent < 0.20:
     mortgage = 0.028
 elif downPaymentPercent >= 0.20:
     mortgage = 0
-
 
 downPayment = (purchasePrice * downPaymentPercent)
 insuranceCost = (((purchasePrice - downPayment) * mortgage))
@@ -53,10 +52,8 @@ mortgageTermInterestRatesDict = {
     10: 0.06
     }
 
-
 # list of valid mortgage term options
 validMortgageTerm = [1, 2, 3, 5, 10]
-
 
 # check if mortgage term input is in valid options list
 while True:
@@ -66,10 +63,8 @@ while True:
     else:
         print("Please enter a valid choice.")
 
-
 # list of valid amortization period options
 validAmortizationPeriod = [5, 10, 15, 20, 25]
-
 
 # check if amortization input is in valid options list
 while True:
@@ -82,60 +77,54 @@ while True:
 annualMortgageInterestRate = mortgageTermInterestRatesDict.get(mortgageTerm)
 
 # Effective monthly rate (EMR) calculation
-effectiveMonthlyRate = ((1 + annualMortgageInterestRate / 2) ** 2) ** (1/12) - 1
+effectiveMonthlyRate = ((((1+(annualMortgageInterestRate/2))**2))**(1/12)-1)
 intrestRate = (annualMortgageInterestRate*100)
 print(f'Interest rate for the term will be {intrestRate:.2f}%')
 
 # Number of monthly payments (n) 
 n = amortizationPeriod * 12
 
-
 # Monthly payments (m) calculations
-monthlyPayments = round(principalAmount * (effectiveMonthlyRate * (1 + effectiveMonthlyRate) ** n) / ((1 + effectiveMonthlyRate) ** n - 1),2)
+monthlyPayments = (principalAmount*(effectiveMonthlyRate*(1+effectiveMonthlyRate)**n))/(((1+effectiveMonthlyRate)**n)-1)
 print(f"Monthly payment amount is: ${monthlyPayments:.0f}")
 
 # Part 2 begins for the table here
 
 table = input("Would you like to see the amortization schedule? (Y/N): " ).upper()
 
-
-# Opening balance
+# # Opening balance
 openingBalance = (principalAmount)
 
-# Monthly Interest amount
-monthlyInterest = round((openingBalance * effectiveMonthlyRate),2)
-
-# Monthly Payments
+# # Monthly Payments
 monthly = round((monthlyPayments),2)
 
-# Monthly priciple
-monthlyPrinciple = round((monthly - monthlyInterest),2)
-
-# Closing Balance
-closingBalance = round((openingBalance - monthlyPrinciple),2)
-
-# Years to months
-yearsToMonths = (mortgageTerm*12)
-
-
 if table.upper() == ('Y'):
-    # Creates a csv file to read data from and create a table to print
+   # Creates a csv file to read data from and create a table to print
     import csv
     with open('amortization_schedule.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(["Month", "Opening Bal.", "Payments", "Principal", "Interest", "Closing Bal."])
-        for month in range(1, yearsToMonths+1):
-            writer.writerow([month, openingBalance, monthlyPayments, monthlyPrinciple, monthlyInterest, closingBalance])
+        month = 1
+        for month in range(1, ((12*mortgageTerm)+1)):
+            # calculation for each month in a loop 
+            monthlyInterest = (openingBalance * effectiveMonthlyRate)
+            monthlyPrinciple = (monthlyPayments - monthlyInterest)
+            closingBalance = (openingBalance - monthlyPrinciple)
+            # format the calculations to force 2 decimal places
+            formattedMonthlyInterest = '{:.2f}'.format(monthlyInterest)
+            formattedMonthlyPrinciple = '{:.2f}'.format(monthlyPrinciple)
+            formattedOpeningBalance = '{:.2f}'.format(openingBalance)
+            formattedMonthlyPayments = '{:.2f}'.format(monthlyPayments)
+            formattedClosingBalance = '{:.2f}'.format(closingBalance)
 
-            # Calculations for each month in a loop
-            closingBalance = round((openingBalance - monthlyPrinciple*2),2)
-            openingBalance = round((openingBalance - monthlyPrinciple),2) 
-            monthlyPrinciple = round(monthlyPrinciple + (monthlyPrinciple*(effectiveMonthlyRate*mortgageTerm)),2)
-            monthlyInterest = round((openingBalance*effectiveMonthlyRate),2)
-            
+            writer.writerow([month, formattedOpeningBalance, formattedMonthlyPayments, formattedMonthlyPrinciple, formattedMonthlyInterest, formattedClosingBalance])
+            openingBalance = closingBalance
+   
     # Formats each row into a table that is readable
     with open('amortization_schedule.csv', 'r') as f:
         reader = csv.reader(f)
+        print("{:<10} {:<20} {:<20} {:<20} {:<20} {:<20}".format('Month', 'Opening Bal', 'Payment', 'Principle', 'Interest', 'Closing Bal'))
+        next(reader)
         for row in reader:
             print("{:<10} {:<20} {:<20} {:<20} {:<20} {:<20}".format(*row))
 
@@ -152,9 +141,13 @@ if table.upper() == ('Y'):
         next(reader)  # Skip the header
         for row in reader:
             totalMonthlyIncome += float(row[4])
+
+    #format monthly principle and monthly income to force 2 decimal places
+    formattedTotalMonthlyPrinciple = '{:.2f}'.format(totalMonthlyPrinciple)
+    formattedTotalMonthlyIncome = '{:.2f}'.format(totalMonthlyIncome)
     
     print("==========================================================================================================")
-    print("{:<52} {:<20} {:<10}".format(f'Total ',totalMonthlyPrinciple, totalMonthlyIncome))
+    print("{:<52} {:<20} {:<10}".format(f'Total ',formattedTotalMonthlyPrinciple, formattedTotalMonthlyIncome))
 
 elif table.upper() == ('N'):
     print("Goodbye")
