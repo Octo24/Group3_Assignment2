@@ -74,6 +74,7 @@ while True:
     else:
         print("Please enter a valid choice.")
 
+
 annualMortgageInterestRate = mortgageTermInterestRatesDict.get(mortgageTerm)
 
 # Effective monthly rate (EMR) calculation
@@ -81,10 +82,12 @@ effectiveMonthlyRate = ((((1+(annualMortgageInterestRate/2))**2))**(1/12)-1)
 intrestRate = (annualMortgageInterestRate*100)
 print(f'Interest rate for the term will be {intrestRate:.2f}%')
 
+
 # Number of monthly payments (n) 
 n = amortizationPeriod * 12
 
 # Monthly payments (m) calculations
+
 monthlyPayments = (principalAmount*(effectiveMonthlyRate*(1+effectiveMonthlyRate)**n))/(((1+effectiveMonthlyRate)**n)-1)
 print(f"Monthly payment amount is: ${monthlyPayments:.0f}")
 
@@ -153,3 +156,4 @@ if table.upper() == ('Y'):
 
 elif table.upper() == ('N'):
     print("Goodbye")
+
